@@ -1,0 +1,13 @@
+{
+    "name": "Stylist",
+    "scripts": {},
+    "env": {},
+    "env": {
+            "SECRET_KEY":{"required":true},
+            "DEBUG":{"required":true},
+            "DJANGO_SETTINGS_MODULE":{"required":true}},
+    "formation": {},
+    "addons": ["heroku-postgresql"],
+    "buildpacks": [],
+    "stack": "heroku-18"
+  }
