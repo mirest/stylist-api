@@ -8,7 +8,6 @@ from ..factories.users import UserFactory
 class TestUserModel(TestCase):
     
     def test_user_model_saves_data_successfully(self):
-
         user=UserFactory(email="kimbsimon2@gmail.com",phone_number='+1-224-976-4509')
         user.create_user()
         self.assertIn('id',user.__dict__)
@@ -18,6 +17,11 @@ class TestUserModel(TestCase):
     
     def test_create_user_without_email(self):
         user=UserFactory(email=None)
+        with self.assertRaises(TypeError):
+            user.create_user()
+    
+    def test_create_user_with_invalid_type(self):
+        user=UserFactory(user_type='noeoir')
         with self.assertRaises(TypeError):
             user.create_user()
     

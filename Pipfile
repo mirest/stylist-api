@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 yapf = "*"
+rope = "*"
+nose = "*"
 
 [packages]
 django-cors-headers = "==2.5.2"

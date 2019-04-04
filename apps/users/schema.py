@@ -29,6 +29,7 @@ class CreateUser(graphene.Mutation):
     class Input:
         google_token = graphene.String(required=True)
         phone_number = graphene.String()
+        user_type = graphene.String(required=True)
 
     user = graphene.Field(UserModel)
     token = graphene.String()
