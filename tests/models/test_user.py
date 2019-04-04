@@ -1,6 +1,9 @@
 from django.test import TestCase
-from ..factories.users import UserFactory
+
 from apps.users.models import User
+
+from ..factories.users import UserFactory
+
 
 class TestUserModel(TestCase):
     
