@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <meta name="google-signin-client_id"
+        content="529696874310-bqiqli3uv8urk80a338cg73sapgchn1m.apps.googleusercontent.com">
+
+</head>
+
+<body>
+    <div>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <p></p>
+        <div><a href="" onclick="signOut()">SignOut</a></div>
+        <div>
+            Google token
+            <p></p>
+            <textarea id='google_token' width='100px'>
+            </textarea>
+        </div>
+    </div>
+    <script>
+        onSignIn=(googleUser)=> {
+            var id_token = googleUser.getAuthResponse().id_token;
+            document.getElementById("google_token").innerHTML =id_token;
+        }
+        signOut = () => {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            });
+        }
+    </script>
+</body>
+
+</html>

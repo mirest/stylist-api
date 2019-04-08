@@ -17,6 +17,7 @@ class UserManager(BaseUserManager, object):
             raise TypeError('Users must have an email address.')
         self.email = self.normalize_email(self.email)
         self.set_password(password)
+        self.is_verified=True
         self.save()
         return self
 
