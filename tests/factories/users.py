@@ -9,6 +9,7 @@ class UserFactory(factory.Factory):
     email = factory.Faker('email')
     phone_number = factory.Faker('phone_number')
     is_verified = True
+    user_type = 'client'
 
 class AdminFactory(UserFactory):
     is_staff = True

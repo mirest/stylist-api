@@ -27,7 +27,7 @@ class TestListUserSchema(TestCase):
     def test_user_is_logged_successfully_created(self, mock_post):
         mock_post.return_value = {"email": "kimbsimon2@gmail.com"}
         body = """mutation createuser {
-                createUser(googleToken: "123456",phoneNumber:"03456754345") {
+                createUser(googleToken: "123456",phoneNumber:"2567249764509",userType:"client") {
                     user {
                     phoneNumber
                     email
@@ -40,7 +40,7 @@ class TestListUserSchema(TestCase):
             'data': {
                 'createUser': {
                     'user': {
-                        'phoneNumber': '03456754345',
+                        'phoneNumber': '2567249764509',
                         'email': 'kimbsimon2@gmail.com'
                     },
                     'message': 'You have successfully signed up'
@@ -55,7 +55,7 @@ class TestListUserSchema(TestCase):
     def test_user_token_is_invalid(self, mock_get):
         mock_get.return_value.status_code.return_value = 400
         body = """mutation createuser {
-                createUser(googleToken: "123456",phoneNumber:"03456754345") {
+                createUser(googleToken: "123456",phoneNumber:"+12249764509",userType:"client") {
                     user {
                     phoneNumber
                     email
@@ -85,7 +85,7 @@ class TestListUserSchema(TestCase):
     def test_user_token_is_valid(self, mock_get):
         mock_get.return_value.status_code.return_value = 200
         body = """mutation createuser {
-                createUser(googleToken: "123456",phoneNumber:"03456754345") {
+                createUser(googleToken: "123456",phoneNumber:"+12249764509", userType:"client") {
                     user {
                     phoneNumber
                     email
@@ -100,11 +100,11 @@ class TestListUserSchema(TestCase):
     @patch('apps.users.google.Generate_User.decode_token')
     def test_user_login(self, mock_get):
         user = UserFactory(email='kimbsimon2@gmail.com',
-                           phone_number="7484492330")
+                           phone_number="+12249764509")
         user.create_user()
         mock_get.return_value = {"email": "kimbsimon2@gmail.com"}
         body = """mutation createuser {
-                createUser(googleToken: "123456") {
+                createUser(googleToken: "123456",userType:"client") {
                     user {
                     phoneNumber
                     email
@@ -117,7 +117,7 @@ class TestListUserSchema(TestCase):
             'data': {
                 'createUser': {
                     'user': {
-                        'phoneNumber': '7484492330',
+                        'phoneNumber': '+12249764509',
                         'email': 'kimbsimon2@gmail.com'
                     },
                     'message': 'You have successfully logged in'
@@ -131,11 +131,11 @@ class TestListUserSchema(TestCase):
     @patch('apps.users.google.Generate_User.decode_token')
     def test_user_signUp_with_existing_no(self, mock_get):
         user = UserFactory(email='kimbsimon2@gmail.com',
-                           phone_number="7484492330")
+                           phone_number="12249764509")
         user.create_user()
         mock_get.return_value = {"email": "kimbugwe@gmail.com"}
         body = """mutation createuser {
-                createUser(googleToken: "123456",phoneNumber:"7484492330") {
+                createUser(googleToken: "123456",phoneNumber:"12249764509",userType:"client") {
                     user {
                     phoneNumber
                     email

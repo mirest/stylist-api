@@ -9,11 +9,13 @@ from config.default import SECRET_KEY
 class Generate_User():
     token=str()
     user=object()
+    user_type=''
 
 
     def __init__(self,**kwargs):
         self.token=kwargs.get('google_token')
         self.phone_number=kwargs.get('phone_number')
+        self.user_type=kwargs.get('user_type')
 
     def generate_user(self):
         token_data=self.decode_token()
@@ -47,7 +49,8 @@ class Generate_User():
 
     def save_new_user(self,token_data,**kwargs):
         user_data={
-            "email": token_data['email']
+            "email": token_data['email'],
+            "user_type":self.user_type
         }
         user=User(**user_data)
         self.process_number(user,**kwargs)
