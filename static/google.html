@@ -24,8 +24,9 @@
     </div>
     <script>
         onSignIn=(googleUser)=> {
+            var access_token = googleUser.Zi.access_token
             var id_token = googleUser.getAuthResponse().id_token;
-            document.getElementById("google_token").innerHTML =id_token;
+            document.getElementById("google_token").innerHTML =access_token;
         }
         signOut = () => {
             var auth2 = gapi.auth2.getAuthInstance();
