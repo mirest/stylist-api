@@ -1,4 +1,6 @@
 import graphene
+
+import apps.profile.schema
 import apps.users.schema
 from apps.users.schema import LoginUser
 import apps.services.schema

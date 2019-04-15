@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'apps.services',
     'social_django',
+    'apps.profile'
 
 
 ]
