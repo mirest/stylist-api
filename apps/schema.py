@@ -1,14 +1,13 @@
 import graphene
-
-
 import apps.users.schema
-from apps.users.schema import CreateUser
+from apps.users.schema import LoginUser
+
 
 
 class Query(apps.users.schema.Query):
     pass
 
 class Mutation(graphene.ObjectType):
-    create_user = CreateUser.Field()     
+    login = LoginUser.Field()
 
 schema = graphene.Schema(query=Query,mutation=Mutation)

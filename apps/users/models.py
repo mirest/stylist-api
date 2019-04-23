@@ -10,39 +10,41 @@ from apps.utils.enums import UserEnum
 from .base_model import BaseModel
 
 
-class UserManager(BaseUserManager, object):
+class UserManager(BaseUserManager):
 
-    def create_user(self, password=None):
-        if self.phone_number is None:
+    def create_user(self, email=None,phone_number=None,password=None,*args,**kwargs):
+        if phone_number is None:
             raise TypeError('Users must have a phone number.')
 
-        if self.email is None:
+        if email is None:
             raise TypeError('Users must have an email address.')
-        self.verify_user_type()
-        self.email = self.normalize_email(self.email)
-        self.set_password(password)
-        self.is_verified=True
-        self.save()
-        return self
+        
+        self.verify_user_type(kwargs.get('user_type','client'))
 
-    def create_superuser(self, password=None):
+        user = self.model(phone_number=phone_number, email=self.normalize_email(email))
+        user.set_password(password)
+        user.is_verified=True
+        user.save()
+        return user
+
+    def create_superuser(self, username, email, password):
         if password is None:
             raise TypeError('Superusers must have a password.')
 
-        user = self.create_user(password)
+        user = self.create_user(username, email, password)
         user.is_superuser = True
         user.is_staff = True
         user.save()
 
         return user
 
-    def verify_user_type(self):
-        if self.user_type not in UserEnum.get_user_types():
+    def verify_user_type(self,user_type):
+        if user_type not in UserEnum.get_user_types():
             values = ' and '.join(UserEnum.get_user_types())
             raise TypeError(f'User type only accepts {values}')
 
 
-class User(AbstractBaseUser, PermissionsMixin, BaseModel, UserManager, UserEnum):
+class User(AbstractBaseUser, PermissionsMixin, BaseModel, UserEnum):
 
     email = models.EmailField(unique=True, null=True)
     phone_regex = RegexValidator(
@@ -63,7 +65,9 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel, UserManager, UserEnum)
     )
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ('email',)
+    REQUIRED_FIELDS = ('email','user_type')
+
+    objects = UserManager()
 
     def __str__(self):
 

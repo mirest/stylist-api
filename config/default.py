@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     
     'apps.services',
+    'social_django',
     
 ]
 
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -131,6 +133,30 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'apps.utils.backends.CustomJSONWebTokenMiddleware',
+
+
+]
+
+
 GRAPHENE = {
     'SCHEMA': 'apps.schema.schema',
+    'MIDDLEWARE': [
+         'apps.utils.backends.CustomJSONWebTokenMiddleware',
+    ],
+    
 }
+
+
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    "JWT_AUTH_HEADER_PREFIX":"Bearer"
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY =os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
