@@ -1,12 +1,10 @@
 from django.db import models
 from apps.users.base_model import BaseModel
-from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
-from apps.users.base_model import BaseModel
 from django.contrib.auth import get_user_model as user_model
 from django.contrib.postgres.fields.ranges import IntegerRangeField
 
 User = user_model()
+
 
 class Services(BaseModel):
     name = models.CharField(max_length=255)
@@ -25,4 +23,3 @@ class HairStyle(BaseModel):
 
     class Meta:
         ordering = ['price_range']
-

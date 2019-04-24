@@ -66,7 +66,6 @@ class CustomJSONWebTokenMiddleware(JSONWebTokenMiddleware):
         if request is not None:
             headers = request.get('HTTP_AUTHORIZATION')
             return headers
-    
-    def authenticate(self,request,*args,**kwargs):
-        pass
 
+    def authenticate(self, request, *args, **kwargs):
+        pass

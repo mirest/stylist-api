@@ -3,10 +3,10 @@ import os
 import sys
 
 if __name__ == '__main__':
-    os.environ.get('DJANGO_SETTINGS_MODULE','config.default')
+    os.environ.get('DJANGO_SETTINGS_MODULE', 'config.default')
     try:
         from django.core.management import execute_from_command_line
-    except ImportError as exc:
+    except ImportError:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "
             "available on your PYTHONPATH environment variable? Did you "
