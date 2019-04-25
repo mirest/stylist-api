@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.core.validators import RegexValidator
@@ -12,18 +10,22 @@ from .base_model import BaseModel
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email=None,phone_number=None,password=None,*args,**kwargs):
+    def create_user(
+        self, email=None, phone_number=None, password=None, *args, **kwargs
+    ):
         if phone_number is None:
             raise TypeError('Users must have a phone number.')
 
         if email is None:
             raise TypeError('Users must have an email address.')
-        
-        self.verify_user_type(kwargs.get('user_type','client'))
 
-        user = self.model(phone_number=phone_number, email=self.normalize_email(email))
+        self.verify_user_type(kwargs.get('user_type', 'client'))
+
+        user = self.model(
+            phone_number=phone_number, email=self.normalize_email(email)
+        )
         user.set_password(password)
-        user.is_verified=True
+        user.is_verified = True
         user.save()
         return user
 
@@ -38,7 +40,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def verify_user_type(self,user_type):
+    def verify_user_type(self, user_type):
         if user_type not in UserEnum.get_user_types():
             values = ' and '.join(UserEnum.get_user_types())
             raise TypeError(f'User type only accepts {values}')
@@ -48,9 +50,17 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel, UserEnum):
 
     email = models.EmailField(unique=True, null=True)
     phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{9,20}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+        regex=r'^\+?1?\d{9,20}$',
+        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."  # noqa: E501
+    )
     phone_number = models.CharField(
-        db_index=True, unique=True, null=False, blank=False, validators=[phone_regex], max_length=20)
+        db_index=True,
+        unique=True,
+        null=False,
+        blank=False,
+        validators=[phone_regex],
+        max_length=20
+    )
 
     is_active = models.BooleanField(default=True)
 
@@ -65,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel, UserEnum):
     )
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ('email','user_type')
+    REQUIRED_FIELDS = ('email', 'user_type')
 
     objects = UserManager()
 

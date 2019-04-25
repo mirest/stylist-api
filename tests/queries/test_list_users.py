@@ -1,10 +1,8 @@
-import json
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 from django.test import Client, TestCase
 
-from apps.schema import schema
-from tests.factories.users import UserFactory
+
 from .mocks import social_auth_mock
 
 API_URL = "http://127.0.0.1:8000"

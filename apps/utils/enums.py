@@ -11,4 +11,4 @@ class UserEnum():
 
     @classmethod
     def get_user_types(cls):
-        return [cls.CLIENT, cls.STYLIST,cls.ADMIN]
+        return [cls.CLIENT, cls.STYLIST, cls.ADMIN]

@@ -11,7 +11,6 @@ class UserFactory(factory.Factory):
     is_verified = True
     user_type = 'client'
 
+
 class AdminFactory(UserFactory):
     is_staff = True
-
-    

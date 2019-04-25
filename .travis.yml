@@ -17,6 +17,7 @@ before_script:
 
 script:
   - coverage run --source='apps' manage.py test
+  - flake8
   - coverage report -m
 
 

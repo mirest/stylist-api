@@ -19,19 +19,19 @@ class Query(graphene.ObjectType):
     user = graphene.List(UserModel, id=graphene.Int())
 
     class Arguments:
-        name=graphene.Int()
+        name = graphene.Int()
 
     @admin_required
     def resolve_users(self, info, **kwargs):
         return User.objects.all()
-    
-    def resolve_user(self,info,id,**kwargs):
+
+    def resolve_user(self, info, id, **kwargs):
         return User.objects.filter(id=id)
 
 
 class UserInput(graphene.InputObjectType):
     """
-    Class defined to accept input data 
+    Class defined to accept input data
     from the interactive graphql console.
     """
     user = graphene.String(required=False)
@@ -53,7 +53,9 @@ class LoginUser(graphql_social_auth.SocialAuthMutation):
 
     @classmethod
     def resolve(cls, root, info, social, **kwargs):
-        return cls(user=social.user, token=Generate_User().generate_token(social.user))
+        return cls(
+            user=social.user, token=Generate_User().generate_token(social.user)
+        )
 
 
 schema = graphene.Schema(query=Query)
